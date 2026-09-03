@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { Passion_One, DM_Sans } from "next/font/google";
 import "./globals.css";
 import { ThemeProvider } from "next-themes";
+export const runtime = "edge";
 
 const passionOne = Passion_One({
   subsets: ['latin'],
