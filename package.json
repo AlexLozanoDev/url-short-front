@@ -4,13 +4,14 @@
   "private": true,
   "scripts": {
     "dev": "next dev",
-    "build": "next build",
-    "start": "next start",
-    "lint": "eslint"
+    "build": "npx @opennextjs/cloudflare",
+    "preview": "npx @opennextjs/cloudflare preview",
+    "deploy": "npx wrangler deploy"
   },
   "dependencies": {
     "@base-ui/react": "^1.7.0",
     "@hookform/resolvers": "^5.9.1",
+    "@opennextjs/cloudflare": "^1.20.6",
     "@tanstack/react-query": "^5.102.8",
     "axios": "^1.20.0",
     "class-variance-authority": "^0.7.1",
@@ -36,6 +37,7 @@
     "eslint": "^9",
     "eslint-config-next": "16.3.4",
     "tailwindcss": "^4",
-    "typescript": "^5"
+    "typescript": "^5",
+    "wrangler": "^4.129.0"
   }
 }
