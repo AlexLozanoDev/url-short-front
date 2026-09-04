@@ -18,5 +18,9 @@
             "head_sampling_rate": 1,
             "persist": true
         }
+    },
+    "assets": {
+        "directory": ".vercel/output/static",
+        "binding": "ASSETS"
     }
 }
