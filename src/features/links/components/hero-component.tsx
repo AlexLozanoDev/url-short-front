@@ -6,6 +6,7 @@ import { Input } from '@/components/ui/input';
 import { useScramble } from '../hooks/use-scramble';
 import { HERO_DEMO_URLS } from '../data/mock-urls';
 import { Check, Copy } from 'lucide-react';
+import { useShortenUrl } from '@/hooks/use-shorten-url';
 
 const sleep = (ms: number) => new Promise((resolve) => setTimeout(resolve, ms));
 
@@ -15,6 +16,7 @@ export function HeroSection() {
   const [hasCopied, setHasCopied] = useState(false);
   const [isShortened, setIsShortened] = useState(false);
   const { displayText, scrambleTo, cancelAnimation, isAnimating } = useScramble({ speed: 25, steps: 18 });
+  const { shorten, isLoading } = useShortenUrl();
   
   const hasAnimatedRef = useRef(false);
   const isCancelledRef = useRef(false);
@@ -44,17 +46,24 @@ export function HeroSection() {
 
   const handleShorten = async (e: FormEvent) => {
     e.preventDefault();
-    if (!urlInput.trim() || isAnimating) return;
+    if (!urlInput.trim() || isAnimating || isLoading) return;
 
     const userUrl = urlInput.trim();
-    const mockShortUrl = 'trmit.app/x9k2p';
-
+    const alias = null;
     setCurrentTitle(userUrl);
-    await scrambleTo(userUrl, mockShortUrl);
-    setCurrentTitle(mockShortUrl);
-    setIsShortened(true);
-  };
 
+    const result = await shorten(userUrl, alias);
+
+    if (result) {
+      const realShortUrl = "trmit.site/"+result;
+
+      
+      await scrambleTo(userUrl, realShortUrl);
+      setCurrentTitle(realShortUrl);
+      setIsShortened(true);
+    }
+  };
+  
   const onChangeUrl = (e: ChangeEvent<HTMLInputElement>) => {
     const val = e.target.value;
 
@@ -103,7 +112,7 @@ export function HeroSection() {
         />
         <Button
           type={isShortened ? "button" : "submit"}
-          onClick={isShortened ? handleCopy : undefined}
+          onClick={isShortened ? handleCopy : handleShorten}
           disabled={isAnimating || (!isShortened && !urlInput.trim())}
           className="bg-[#191919] hover:bg-[#808080] text-white font-passion text-lg px-8 h-12 self-center rounded-xl transition-colors disabled:opacity-50 flex items-center gap-2 dark:bg-[#e9e9e9] dark:text-black dark:hover:bg-[#808080]"
         >
