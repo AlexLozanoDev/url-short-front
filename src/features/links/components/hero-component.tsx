@@ -54,8 +54,9 @@ export function HeroSection() {
 
     const result = await shorten(userUrl, alias);
 
-    if (result) {
-      const realShortUrl = "trmit.site/"+result;
+    if (result?.success) {
+      
+      const realShortUrl = "trmit.site/"+result.data.shortCode;
 
       
       await scrambleTo(userUrl, realShortUrl);

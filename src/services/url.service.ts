@@ -1,9 +1,9 @@
 import { apiClient } from "./api-client";
-import { ShortenUrlRequest } from "../types/urls";
+import { ShortenUrlRequest, ShortenUrlResponse } from "../types/urls";
 
 export const urlService = {
-  shortenUrl: (data: ShortenUrlRequest): Promise<string> => {
-    return apiClient("/v1/links", {
+  shortenUrl: (data: ShortenUrlRequest): Promise<ApiResponse<ShortenUrlResponse>> => {
+    return apiClient("/v1/trimit", {
       method: "POST",
       body: JSON.stringify(data),
     });

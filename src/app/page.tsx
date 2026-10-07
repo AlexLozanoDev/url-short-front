@@ -15,7 +15,7 @@ export default function Home() {
           aria-label="Inicio/Registro"
           className="hover:text-black "
         >
-          <UserRound className="w-5 h-5" />
+          <UserRound className="w-5 h-5 hover:bg-zinc-200 dark:hover:bg-zinc-800 text-zinc-800 dark:text-white transition-colors" />
         </Button>
       </header>
       <HeroSection />

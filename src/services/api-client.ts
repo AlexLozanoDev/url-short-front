@@ -1,11 +1,9 @@
-const BASE_URL =
-  process.env.PUBLIC_API_URL ||
-  "https://trmit.site";
+const BASE_URL = process.env.PUBLIC_API_URL || "https://trmit.site/api";
 
-export async function apiClient(
+export async function apiClient<T>(
   endpoint: string,
   options?: RequestInit,
-): Promise<string> {
+): Promise<T> {
   const response = await fetch(`${BASE_URL}${endpoint}`, {
     headers: {
       "Content-Type": "application/json",
@@ -15,13 +13,27 @@ export async function apiClient(
   });
 
   if (!response.ok) {
-    const errorData = await response.json().catch(() => ({}));
-    throw new Error(
-      errorData.message ||
-        `Error ${response.status}: Ocurrió un fallo en la petición`,
-    );
+    const errorText = await response.text();
+    let errorMessage = `Error ${response.status}: Ocurrió un fallo en la petición`;
+
+    try {
+      const errorJson = JSON.parse(errorText);
+      errorMessage = errorJson.message || errorJson.title || errorMessage;
+    } catch {
+      if (errorText) errorMessage = errorText;
+    }
+
+    throw new Error(errorMessage);
+  }
+
+  const contentType = response.headers.get("content-type");
+
+  if (contentType && contentType.includes("application/json")) {
+    return (await response.json()) as T;
   }
 
   const textData = await response.text();
-  return textData.replace(/^"|"$/g, "").trim();
+  const cleanedText = textData.replace(/^"|"$/g, "").trim();
+
+  return cleanedText as unknown as T;
 }
