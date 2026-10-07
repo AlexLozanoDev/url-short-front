@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { urlService } from "@/services/url.service";
 import { ShortenUrlResponse } from "@/types/urls";
+import { ApiResponse } from "@/types/ApiResponse";
 
 export function useShortenUrl() {
   const [isLoading, setIsLoading] = useState(false);
