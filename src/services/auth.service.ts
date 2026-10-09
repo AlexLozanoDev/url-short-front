@@ -1,23 +1,24 @@
 import { apiClient } from "@/services/api-client";
-import { LoginRequest, RegisterRequest, AuthResponse } from "../types/auth";
+import { LoginRequest, AuthResponse } from "../types/auth";
+import { ApiResponse } from "@/types/ApiResponse";
 
 export const authService = {
-  login: (credentials: LoginRequest): Promise<AuthResponse> => {
-    return apiClient<AuthResponse>("/v1/auth/login", {
+  login: (credentials: LoginRequest): Promise<ApiResponse<AuthResponse>> => {
+    return apiClient<ApiResponse<AuthResponse>>("/v1/auth/login", {
       method: "POST",
       body: JSON.stringify(credentials),
     });
   },
 
-  register: (data: RegisterRequest): Promise<string> => {
-    return apiClient<string>("/v1/auth/register", {
+  register: (data: LoginRequest): Promise<ApiResponse<string>> => {
+    return apiClient<ApiResponse<string>>("/v1/auth/register", {
       method: "POST",
       body: JSON.stringify(data),
     });
   },
 
-  refreshToken: (refreshToken: string): Promise<AuthResponse> => {
-    return apiClient<AuthResponse>("/v1/auth/refresh", {
+  refreshToken: (refreshToken: string): Promise<ApiResponse<AuthResponse>> => {
+    return apiClient<ApiResponse<AuthResponse>>("/v1/auth/refresh", {
       method: "POST",
       body: JSON.stringify({ refreshToken }),
     });
