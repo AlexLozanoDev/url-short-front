@@ -75,7 +75,7 @@ export function HeroSection() {
 
     setUrlInput(val);
     setIsShortened(false);
-    setCurrentTitle(val.trim() !== '' ? val : 'trmit.app');
+    setCurrentTitle(val.trim() !== '' ? val : 'trmit.site');
   };
 
   const handleCopy = async () => {

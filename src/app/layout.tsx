@@ -2,6 +2,8 @@ import type { Metadata } from "next";
 import { Passion_One, DM_Sans } from "next/font/google";
 import "./globals.css";
 import { ThemeProvider } from "next-themes";
+import { AuthProvider } from "@/features/auth/context/auth-context";
+import { Toaster } from "@/components/ui/toast";
 
 const passionOne = Passion_One({
   subsets: ['latin'],
@@ -33,7 +35,10 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
           enableSystem
           disableTransitionOnChange
         >
-          {children}
+          <AuthProvider>
+            {children}
+            <Toaster/>
+          </AuthProvider>
         </ThemeProvider>
       </body>
     </html>
