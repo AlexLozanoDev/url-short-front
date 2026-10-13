@@ -11,6 +11,5 @@ export interface AuthResponse {
 
 export interface User {
   id: string,
-  email: string,
-  createdDate: string
+  email: string
 }

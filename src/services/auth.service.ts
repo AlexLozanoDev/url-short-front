@@ -1,5 +1,5 @@
 import { apiClient } from "@/services/api-client";
-import { LoginRequest, AuthResponse } from "../types/auth";
+import { LoginRequest, AuthResponse, User } from "../types/auth";
 import { ApiResponse } from "@/types/ApiResponse";
 
 export const authService = {
@@ -23,4 +23,10 @@ export const authService = {
       body: JSON.stringify({ refreshToken }),
     });
   },
+
+  getCurrentUser: (): Promise<ApiResponse<User>> => {
+    return apiClient<ApiResponse<User>>("/v1/auth/me", {
+      method: "GET"
+    })
+  }
 };

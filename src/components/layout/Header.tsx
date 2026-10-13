@@ -21,14 +21,14 @@ export default function Header() {
         Trmit
       </Link>
       <Button
-        onClick={isAuthenticated ? logout : toLogin}
+        onClick={isAuthenticated || user !== null ? logout : toLogin}
         variant="ghost"
         size="icon"
         aria-label="Inicio/Registro"
         className="hover:text-black "
         disabled={pathname.startsWith("/auth")}
       >
-        {isAuthenticated ? (
+        {isAuthenticated || user !== null ? (
           <LogOut className="w-5 h-5 hover:bg-zinc-200 dark:hover:bg-zinc-800 text-zinc-800 dark:text-white transition-colors" />
         ) : (
           <UserRound className="w-5 h-5 hover:bg-zinc-200 dark:hover:bg-zinc-800 text-zinc-800 dark:text-white transition-colors" />

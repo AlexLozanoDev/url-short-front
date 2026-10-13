@@ -1,6 +1,6 @@
 "use client";
 
-import { createContext, ReactNode, useContext, useState } from "react";
+import { createContext, ReactNode, useContext, useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import { User, LoginRequest, AuthResponse } from "@/types/auth";
 
@@ -17,6 +17,25 @@ const AuthContext = createContext<AuthContextType | undefined>(undefined);
 export function AuthProvider({ children }: { children: ReactNode }) {
   const [user, setUser] = useState<User | null>(null);
   const router = useRouter();
+
+  useEffect(()=>{
+    async function checkSession() {
+      try {
+        const response = await fetch("/api/auth/me");
+        
+        if (response.ok) {
+          const result = await response.json();
+          setUser(result.data);
+        }else{
+          setUser(null);
+        }
+      } catch (error) {
+        setUser(null)
+      }
+    }
+
+    checkSession();
+  }, []);
 
   const login = async (credentials: LoginRequest) => {
     const response = await fetch("/api/auth/login", {
