@@ -4,6 +4,7 @@ import "./globals.css";
 import { ThemeProvider } from "next-themes";
 import { AuthProvider } from "@/features/auth/context/auth-context";
 import { Toaster } from "@/components/ui/toast";
+import { GlobalLoader } from "@/components/ui/global-loader";
 
 const passionOne = Passion_One({
   subsets: ['latin'],
@@ -38,6 +39,7 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
           <AuthProvider>
             {children}
             <Toaster/>
+            <GlobalLoader/>
           </AuthProvider>
         </ThemeProvider>
       </body>
